@@ -1,0 +1,17 @@
+/* LAYOUT */
+
+.main-layout {
+    max-width: 1000px;
+}
+
+.img-container {
+    border-color: black;
+    padding: 15px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.image {
+    width: 150px;
+    margin: 1px;
+}
