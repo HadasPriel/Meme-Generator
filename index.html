@@ -9,20 +9,26 @@
 </head>
 
 <body onload="onInit()">
-    <header class="main header">
+    <header class="main-header">
         <h1>Meme Generator</h1>
     </header>
-    <section class="img-gallery main-layout">
-        <div class="img-container main-layout">
+    <section class="gallery-section main-layout">
+        <div class="img-container main-layout"></div>
+    </section>
 
+    <section class="canvas-section">
+        <div class="tools">
+            <label for="txt">your text:</label>
+            <input id="txt" type="txt" onchange="onTxt(value)" />
+        </div>
+        <div class="canvas-container">
+            <canvas id="meme-canvas" height="450" width="450"></canvas>
         </div>
     </section>
 
 
 
-
-
-
+    <!-- <script src="js/img-servise.js"></script> -->
     <script src="js/meme-servise.js"></script>
     <script src="js/meme-controler.js"></script>
 </body>

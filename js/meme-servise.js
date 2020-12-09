@@ -1,5 +1,6 @@
 'use strict'
 
+// IMAGES:
 var gImgId = 1;
 var gImgs = [{
         id: gImgId,
@@ -93,9 +94,47 @@ var gImgs = [{
     },
 ]
 
-
 function imgsForDisplay() {
     return gImgs
 }
-
 console.log(gImgs);
+
+
+// MEME
+var gMeme = {
+    selectedImgId: 1,
+    selectedLineIdx: 0,
+    lines: [{
+        txt: 'meme txt',
+        size: 20,
+        align: 'center',
+        color: 'black'
+
+    }]
+}
+
+function getMeme() {
+    return gMeme
+}
+
+function getImg() {
+    var currImg = [];
+    var idCurrImg = gMeme.selectedImgId
+    var currImg = gImgs.filter(function(img) {
+        if (img.id === idCurrImg)
+            return img
+    })
+    console.log('currImg', currImg);
+    console.log('getImg', currImg[0].url);
+    return `../img/${currImg[0].url}`
+}
+
+function setLineTxt(text) {
+    gMeme.lines[gMeme.selectedLineIdx].txt = text
+}
+
+function setSelectedImgId(imgId) {
+    console.log('imgId', imgId);
+    gMeme.selectedImgId = +imgId
+    console.log('gMeme', gMeme);
+}
