@@ -19,7 +19,12 @@
     <section class="canvas-section">
         <div class="tools">
             <label for="txt">your text:</label>
-            <input id="txt" type="txt" onchange="onTxt(value)" />
+            <input id="txt" type="txt" class="txt-input" onchange="onTxt(value)" />
+            <button class="increase-font tools-btn" onclick="onTxtSize(1)">+</button>
+            <button class="decrease-font tools-btn" onclick="onTxtSize(-1)">-</button>
+            <button class="up-font tools-btn" onclick="onTxtLocY(-1)">↑</button>
+            <button class="down-font tools-btn" onclick="onTxtLocY(1)">↓</button>
+            <button class="switch-line tools-btn" onclick="onSwitchLine()">⇄</button>
         </div>
         <div class="canvas-container">
             <canvas id="meme-canvas" height="450" width="450"></canvas>

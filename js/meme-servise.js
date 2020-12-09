@@ -105,12 +105,22 @@ var gMeme = {
     selectedImgId: 1,
     selectedLineIdx: 0,
     lines: [{
-        txt: 'meme txt',
-        size: 20,
-        align: 'center',
-        color: 'black'
-
-    }]
+            txt: 'meme txt 1',
+            size: 30,
+            align: 'center',
+            color: 'black',
+            locX: 225,
+            locY: 70
+        },
+        {
+            txt: 'meme txt 2',
+            size: 50,
+            align: 'center',
+            color: 'black',
+            locX: 225,
+            locY: 400
+        }
+    ]
 }
 
 function getMeme() {
@@ -124,8 +134,6 @@ function getImg() {
         if (img.id === idCurrImg)
             return img
     })
-    console.log('currImg', currImg);
-    console.log('getImg', currImg[0].url);
     return `../img/${currImg[0].url}`
 }
 
@@ -133,8 +141,20 @@ function setLineTxt(text) {
     gMeme.lines[gMeme.selectedLineIdx].txt = text
 }
 
+function setSize(diff) {
+    gMeme.lines[gMeme.selectedLineIdx].size += diff
+}
+
+function setLocY(diff) {
+    gMeme.lines[gMeme.selectedLineIdx].locY += diff
+}
+
+function setSelectedLineIdx() {
+    gMeme.selectedLineIdx++;
+    if (gMeme.selectedLineIdx > gMeme.lines.length - 1) selectedLineIdx = 0
+    return gMeme.selectedLineIdx
+}
+
 function setSelectedImgId(imgId) {
-    console.log('imgId', imgId);
     gMeme.selectedImgId = +imgId
-    console.log('gMeme', gMeme);
 }
