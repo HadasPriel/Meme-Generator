@@ -151,7 +151,7 @@ function setLocY(diff) {
 
 function setSelectedLineIdx() {
     gMeme.selectedLineIdx++;
-    if (gMeme.selectedLineIdx > gMeme.lines.length - 1) selectedLineIdx = 0
+    if (gMeme.selectedLineIdx > gMeme.lines.length - 1) gMeme.selectedLineIdx = 0
     return gMeme.selectedLineIdx
 }
 

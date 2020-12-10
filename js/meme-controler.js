@@ -6,6 +6,7 @@ var gCtx;
 function onInit() {
     renderImgs()
     rendrCanvas()
+    resizeCanvas()
 }
 
 
@@ -22,7 +23,6 @@ function renderImgs() {
 function rendrCanvas() {
     gCanvas = document.getElementById('meme-canvas')
     gCtx = gCanvas.getContext('2d')
-
     drawImg()
 }
 
@@ -57,13 +57,19 @@ function addBorder(currLine) {
     console.log('continue');
 }
 
+function resizeCanvas() {
+    var elContainer = document.querySelector('.canvas-container');
+    gCanvas.width = elContainer.offsetWidth
+    gCanvas.height = elContainer.offsetHeight
+}
+
 // DRAW FUNCTIONS
 function drawImg() {
     var img = new Image();
     let currMeme = getMeme()
     img.src = getImg();
     img.onload = () => {
-        gCtx.drawImage(img, 0, 0, 450, 450)
+        gCtx.drawImage(img, 0, 0, 460, 460) //get the canvas-container size insted
         drawText(currMeme.lines)
     }
 }

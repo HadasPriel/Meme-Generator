@@ -10,25 +10,43 @@
 
 <body onload="onInit()">
     <header class="main-header">
-        <h1>Meme Generator</h1>
+        <div class="header-contant main-layout flex align-center">
+            <img class="logo-img" src="design/LOGO.png" />
+            <ul class="main-nav clean-list flex">
+                <li><button class="nav-item">Gallery</button></li>
+                <li><button class="nav-item">My Memes</button></li>
+            </ul>
+            <button class="hamburger">☰</button>
+        </div>
     </header>
+
     <section class="gallery-section main-layout">
-        <div class="img-container main-layout"></div>
+        <div class="nav-gallery">
+            <input class="search-gallery" type="txt" placeholder="Search" />
+            <div class="key-words">words</div>
+            <button class="gallery-btn">More</button>
+        </div>
+        <div class="gallery-contant flex">
+            <div class="img-container main-layout flex wrap"></div>
+            <div class="scroll"></div>
+        </div>
     </section>
 
-    <section class="canvas-section">
-        <div class="tools">
-            <label for="txt">your text:</label>
+    <section class="meme-editor main-layout flex">
+        <div class="canvas-container editor-ch">
+            <canvas id="meme-canvas" height="460" width="460"></canvas>
+        </div>
+        <div class="tools editor-ch">
+            <!-- <label for="txt">your text:</label> -->
             <input id="txt" type="txt" class="txt-input" onchange="onTxt(value)" />
             <button class="increase-font tools-btn" onclick="onTxtSize(1)">+</button>
             <button class="decrease-font tools-btn" onclick="onTxtSize(-1)">-</button>
             <button class="up-font tools-btn" onclick="onTxtLocY(-1)">↑</button>
             <button class="down-font tools-btn" onclick="onTxtLocY(1)">↓</button>
             <button class="switch-line tools-btn" onclick="onSwitchLine()">⇄</button>
+            <button class="save tools-btn" onclick="onSaveMeme()">save</button>
         </div>
-        <div class="canvas-container">
-            <canvas id="meme-canvas" height="450" width="450"></canvas>
-        </div>
+
     </section>
 
 
