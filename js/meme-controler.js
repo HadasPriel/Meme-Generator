@@ -2,17 +2,18 @@
 
 var gCanvas;
 var gCtx;
+var gIsDrag;
 
 function onInit() {
     renderImgs()
     rendrCanvas()
-    resizeCanvas()
+    CanvasEvListeners()
 }
 
 
-function renderImgs() {
+function renderImgs(typing) {
     let strHtml = '';
-    let imgs = imgsForDisplay()
+    let imgs = imgsForDisplay(typing)
     imgs.forEach(function(img) {
         strHtml += `<img class="image" onclick="onImg('${img.id}')" src="img/${img.url}" />`;
     })
@@ -24,10 +25,19 @@ function rendrCanvas() {
     gCanvas = document.getElementById('meme-canvas')
     gCtx = gCanvas.getContext('2d')
     drawImg()
+
 }
 
 function onImg(imgId) {
+    var elGallerySection = document.querySelector('.gallery-section')
+    var elCanvasContainer = document.querySelector('.canvas-container')
+    var elToolsContainer = document.querySelector('.tools-container')
+    elGallerySection.style.display = 'none'
+    elCanvasContainer.style.display = 'block'
+    elToolsContainer.style.display = 'block'
+
     setSelectedImgId(imgId)
+    resizeCanvas()
     rendrCanvas()
 }
 
@@ -36,6 +46,16 @@ function onTxt(text) {
     rendrCanvas()
 
     document.querySelector('.txt-input').value = ''
+}
+
+function onTxtFont(font) {
+    setFontType(font)
+    rendrCanvas()
+}
+
+function onColor(color) {
+    setColor(color)
+    rendrCanvas()
 }
 
 function onTxtSize(diff) {
@@ -48,17 +68,96 @@ function onTxtLocY(diff) {
     rendrCanvas()
 }
 
-function onSwitchLine() {
-    var currLine = setSelectedLineIdx()
-    addBorder(currLine)
+function onTxtLocX(diff) {
+    setLocX(diff)
+    rendrCanvas()
 }
 
-function addBorder(currLine) {
-    console.log('add border/bgc');
+function onLineDelete() {
+    deleteLine()
+    rendrCanvas()
+}
+
+function onLineAdd() {
+    createLine()
+    rendrCanvas()
+}
+
+function onSwitchLine() {
+    // deletBorder()
+    setSelectedLineIdx()
+    rendrCanvas()
+}
+
+function addBorder() {
+    var currMeme = getMeme()
+    var currLine = currMeme.selectedLineIdx
+    if (!currLine) return //still eror!
+    var offsetX = currMeme.lines[currLine].locX
+    var offsetY = currMeme.lines[currLine].locY
+    var height = currMeme.lines[currLine].size
+    var txt = currMeme.lines[currLine].txt
+    var width = currMeme.lines[currLine].size * txt.length / 2
+    var startX = offsetX - (width / 2)
+    var startY = offsetY - height + 5
+
+    gCtx.beginPath()
+    gCtx.strokeStyle = 'white';
+    gCtx.rect(startX, startY, width, height);
+    gCtx.stroke();
 }
 
 function onSaveMeme() {
+    const data = gCanvas.toDataURL();
+    saveMemeToLocalStorage(data)
+}
 
+function onRenderMemes() {
+    var preMemes = getPreMemes()
+    if (!preMemes) {
+        console.log('no memes in trorage');
+        return
+    }
+    var strHtml = ''
+    preMemes.forEach(function(preMeme) {
+        strHtml += `<img class="image" src="${preMeme}"/>`
+    })
+    var elPreContainre = document.querySelector('.previous-container')
+    elPreContainre.innerHTML = strHtml
+    var elPreContainre = document.querySelector('.previous-memes')
+    elPreContainre.style.display = 'block'
+    var elGallery = document.querySelector('.gallery-section')
+    elGallery.style.display = 'none'
+    var elCanvas = document.querySelector('.canvas-container')
+    elCanvas.style.display = 'none'
+    var elTools = document.querySelector('.tools-container')
+    elTools.style.display = 'none'
+
+    var elMyMeme = document.querySelector('.my-memes')
+    var elMyGallery = document.querySelector('.my-gallery')
+    elMyMeme.classList.toggle('active')
+    elMyGallery.classList.toggle('active')
+}
+
+function onRenderGallery() {
+    var elGallerySection = document.querySelector('.gallery-section')
+    elGallerySection.style.display = 'block'
+    var elPreContainre = document.querySelector('.previous-memes')
+    elPreContainre.style.display = 'none'
+    var elCanvasContainer = document.querySelector('.canvas-container')
+    elCanvasContainer.style.display = 'none'
+    var elToolsContainer = document.querySelector('.tools-container')
+    elToolsContainer.style.display = 'none'
+
+    var elMyMeme = document.querySelector('.my-memes')
+    var elMyGallery = document.querySelector('.my-gallery')
+    elMyMeme.classList.toggle('active')
+    elMyGallery.classList.toggle('active')
+}
+
+function onSerchImg(typing) {
+    imgsForDisplay(typing)
+    renderImgs(typing)
 }
 
 function resizeCanvas() {
@@ -66,6 +165,44 @@ function resizeCanvas() {
     gCanvas.width = elContainer.offsetWidth
     gCanvas.height = elContainer.offsetHeight
 }
+
+
+function CanvasEvListeners() {
+    gCanvas.addEventListener("mousedown", function() {
+        gIsDrag = true
+    })
+    gCanvas.addEventListener("mouseup", function() {
+        gIsDrag = false
+    })
+    gCanvas.addEventListener("mousemove", function(event) {
+        if (!gIsDrag) return
+
+        var offsetX = event.offsetX
+        var offsetY = event.offsetY
+
+        let currMeme = getMeme()
+        let lines = currMeme.lines
+        lines.forEach(function(line, index) {
+            var height = line.size
+            var width = line.size * line.txt.length / 2
+            var startX = line.locX - (width / 2)
+            var startY = line.locY - height + 5
+            if (offsetX > startX && offsetX < startX + width &&
+                offsetY > startY && offsetY < startY + height) {
+                setLineLocation(index, offsetX, offsetY)
+                rendrCanvas()
+            }
+        })
+    })
+}
+
+
+function downloadCanvas(elLink) {
+    const data = gCanvas.toDataURL();
+    elLink.href = data;
+    elLink.download = 'my-img.jpg';
+}
+
 
 // DRAW FUNCTIONS
 function drawImg() {
@@ -75,6 +212,7 @@ function drawImg() {
     img.onload = () => {
         gCtx.drawImage(img, 0, 0, 460, 460) //get the canvas-container size insted
         drawText(currMeme.lines)
+        addBorder()
     }
 }
 
@@ -82,9 +220,9 @@ function drawText(memes) {
     memes.forEach(function(meme) {
         gCtx.lineWidth = '1.5'
         gCtx.strokeStyle = 'black'
-        gCtx.fillStyle = 'white'
-        gCtx.font = `${meme.size}px IMPACT`
-        gCtx.textAlign = 'center'
+        gCtx.fillStyle = `${meme.color}`
+        gCtx.font = `${meme.size}px ${meme.font}`
+        gCtx.textAlign = `${meme.align}`
         gCtx.fillText(meme.txt, meme.locX, meme.locY)
         gCtx.strokeText(meme.txt, meme.locX, meme.locY)
 

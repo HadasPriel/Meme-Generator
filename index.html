@@ -13,8 +13,8 @@
         <div class="header-contant main-layout flex align-center">
             <img class="logo-img" src="design/LOGO.png" />
             <ul class="main-nav clean-list flex">
-                <li><button class="nav-item">Gallery</button></li>
-                <li><button class="nav-item">My Memes</button></li>
+                <li><button class="my-gallery nav-item active" onclick="onRenderGallery()">Create Meme</button></li>
+                <li><button class="my-memes nav-item" onclick="onRenderMemes()">My Memes</button></li>
             </ul>
             <button class="hamburger">☰</button>
         </div>
@@ -22,7 +22,7 @@
 
     <section class="gallery-section main-layout">
         <div class="nav-gallery">
-            <input class="search-gallery" type="txt" placeholder="Search" />
+            <input class="search-gallery" type="txt" placeholder="Search" onkeyup="onSerchImg(value)" />
             <div class="key-words">words</div>
             <button class="gallery-btn">More</button>
         </div>
@@ -32,21 +32,47 @@
         </div>
     </section>
 
-    <section class="meme-editor main-layout flex">
+    <section class="meme-editor main-layout flex justify-center">
         <div class="canvas-container editor-ch">
             <canvas id="meme-canvas" height="460" width="460"></canvas>
         </div>
-        <div class="tools editor-ch">
-            <!-- <label for="txt">your text:</label> -->
-            <input id="txt" type="txt" class="txt-input" onchange="onTxt(value)" />
-            <button class="increase-font tools-btn" onclick="onTxtSize(1)">+</button>
-            <button class="decrease-font tools-btn" onclick="onTxtSize(-1)">-</button>
-            <button class="up-font tools-btn" onclick="onTxtLocY(-1)">↑</button>
-            <button class="down-font tools-btn" onclick="onTxtLocY(1)">↓</button>
-            <button class="switch-line tools-btn" onclick="onSwitchLine()">⇄</button>
-            <button class="save tools-btn" onclick="onSaveMeme()">save</button>
+        <div class="tools-container">
+            <input type="txt" class="txt-input" placeholder="write here" onchange="onTxt(value)" />
+            <div class="tools1 tool">
+                <button class="switch-line tools-btn" onclick="onSwitchLine()">⇄</button>
+                <button class="add-line tools-btn" onclick="onLineAdd()">+</button>
+                <button class="delete-line tools-btn" onclick="onLineDelete()"><img src="design/img/delete.png"/></button>
+            </div>
+            <div class="tools2 tool">
+                <button class="increase-font tools-btn" onclick="onTxtSize(1)">A+</button>
+                <button class="decrease-font tools-btn" onclick="onTxtSize(-1)">A-</button>
+                <select class="type-font tools-btn" onchange="onTxtFont(value)">
+                    <option>Impact</option>
+                    <option>Ariel</option>
+                    <option>Brush Script MT</option>
+                    <option>Algerian</option>
+                    <option>Bernard MT Condensed</option>
+                </select>
+                <button class="align-line tools-btn" onclick="onTxtLocX(100)"><img src="design/img/left.png"/></button>
+                <button class="align-line tools-btn" onclick="onTxtLocX(350)"><img src="design/img/right.png"/></button>
+                <button class="align-line tools-btn" onclick="onTxtLocX(225)"><img src="design/img/center.png"/></button>
+                <button class="bold tools-btn" onclick="onTxtLocX(350)">B</button>
+                <label for="color" class="color-input tools-btn"><img src="design/img/color.png"/></label>
+                <input id="color" type="color" class="color-input" onchange="onColor(value)" />
+            </div>
+            <!-- <div class="stikers-container tool"></div> -->
+            <div class="tools3 tool">
+                <button class="save tools-btn" onclick="onSaveMeme()"> Save</button>
+                <a class="download tools-btn" href="#" onclick="downloadCanvas(this)" download="">Download</a>
+            </div>
+            <!-- <button class="up-font tools-btn" onclick="onTxtLocY(-1)">↑</button> -->
+            <!-- <button class="down-font tools-btn" onclick="onTxtLocY(1)">↓</button> -->
         </div>
 
+    </section>
+
+    <section class="previous-memes main-layout">
+        <div class="previous-container"></div>
     </section>
 
 
@@ -55,5 +81,9 @@
     <script src="js/meme-servise.js"></script>
     <script src="js/meme-controler.js"></script>
 </body>
+
+<footer>
+    add footer
+</footer>
 
 </html>

@@ -33,8 +33,12 @@ button {
     background-color: rgba(255, 255, 255, 0);
 }
 
-
-/* LAYOUT */
+.header-contant .nav-item.active {
+    color: #21ac91;
+    background-color: #fefefe;
+    box-shadow: 0 3px 6px 1px rgba(0, 0, 0, 0.15);
+    border-radius: 2em;
+}
 
 .main-layout {
     max-width: 430px;
@@ -57,10 +61,11 @@ button {
 
 .header-contant .nav-item {
     display: none;
-    padding-inline-start: 30px;
+    padding: 0.2em 1em;
+    margin: 10px;
     font-family: PoppinsM;
     font-size: 1.3125rem;
-    height: 80px;
+    height: 2em;
     background-color: rgba(255, 0, 0, 0);
 }
 
@@ -141,13 +146,8 @@ button {
     margin: auto;
 }
 
-.meme-editor .editor-ch {
-    width: 350px;
-    height: 350px;
-    margin: 0 20px;
-}
-
 .meme-editor .canvas-container {
+    display: none;
     margin-bottom: 20px;
     /* background-image: url(../design/img/Forme_1.png); */
 }
@@ -158,15 +158,29 @@ canvas {
     margin: auto;
 }
 
-.meme-editor .tools {
+.meme-editor .tools-container {
+    display: none;
+    width: 350px;
+    margin: 0 20px;
     border-radius: 2em;
-    padding: 40px;
+    padding: 10px;
     background-color: rgba(235, 238, 243, 0.11);
     box-shadow: 1px 5px 0 rgba(235, 238, 243, 0.05), inset 0 1px 0 rgb(255, 255, 255, 0.07);
 }
 
-.meme-editor .txt-input {
+.tools-container img {
+    height: 25px;
+}
+
+.tools-container .tool {
+    margin: 0 auto 20px auto;
+    text-align: center;
+}
+
+.tools-container .txt-input {
     display: block;
+    margin: 0 auto 20px auto;
+    width: 90%;
     background-color: #ebeef3;
     box-shadow: 1px 5px 0 rgba(92, 92, 92, 0.55), inset 0 5px 0 rgba(255, 255, 255, 0.58);
     border-radius: 2em;
@@ -177,14 +191,84 @@ canvas {
 }
 
 .tools-btn {
+    margin-left: 10px;
     color: #22252c;
     font-size: 1.6875rem;
     font-family: PoppinsSB;
     width: 50px;
     height: 50px;
     border-radius: 0.5em;
+    padding: 10px;
     background-color: #ffffff;
     box-shadow: 1px 5px 0 rgba(92, 92, 92, 0.55), inset 0 5px 0 rgba(255, 255, 255, 0.58);
+}
+
+.tools-container .switch-line {
+    background-image: linear-gradient(-38deg, #66c4dc 0%, #40b1ce 50%, #0c98bb 100%);
+    box-shadow: 1px 5px 0 #048b97, inset 0 5px 0 rgba(255, 255, 255, 0.58);
+}
+
+.tools-container .add-line {
+    background-image: linear-gradient(-38deg, #42eb5c 0%, #37b34a 100%);
+    box-shadow: 1px 5px 0 #015d33, inset 0 5px 0 rgba(255, 255, 255, 0.58);
+}
+
+.tools-container .delete-line {
+    background-image: linear-gradient(-38deg, #cf1d37 0%, #cf1d37 1%, #f05036 100%);
+    box-shadow: 1px 5px 0 #8c0606, inset 0 5px 0 rgba(255, 255, 255, 0.58);
+}
+
+.tools-container .tools2 {
+    width: 95%;
+    background-color: #19a59f;
+    border-radius: 2em;
+    padding: 15px;
+}
+
+.tools-container .tools2 button,
+.tools-container .tools2 select,
+.tools-container .tools2 label,
+.tools-container .tools2 color {
+    margin: 0 13px 15px 0;
+}
+
+.tools-container .type-font {
+    width: 120px;
+    font-size: 20px;
+}
+
+.tools-container input {
+    display: none;
+}
+
+.tools-container .save {
+    background-image: linear-gradient(-38deg, #42eb5c 0%, #37b34a 100%);
+    box-shadow: 1px 5px 0 #015d33, inset 0 5px 0 rgba(255, 255, 255, 0.58);
+}
+
+.tools-container .download {
+    text-decoration: none;
+    background-color: #8f44bb;
+    box-shadow: 1px 6px 0 #632687, inset 0 5px 0 #9373a7;
+}
+
+.tools-container .tools3 button,
+.tools-container .tools3 a {
+    color: #ffffff;
+    font-family: PoppinsM;
+    font-size: 1.3125rem;
+    width: 170px;
+}
+
+
+/* MY MEMES */
+
+.previous-memes {
+    display: none;
+    background-color: #383b42;
+    padding: 20px 10px;
+    border-radius: 10px;
+    margin: auto;
 }
 
 
@@ -258,8 +342,15 @@ canvas {
     .meme-editor {
         flex-direction: row;
     }
-    .meme-editor .editor-ch {
+    .meme-editor .tools-container {
         width: 465px;
         height: 465px;
+    }
+    .meme-editor .tools-container {
+        width: 350px;
+        height: 350px;
+        margin: 0 20px;
+        border-radius: 2em;
+        padding: 40px;
     }
 }

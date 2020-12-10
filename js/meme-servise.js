@@ -1,5 +1,7 @@
 'use strict'
 
+const IMG_KEY = 'imgKey'
+
 // IMAGES:
 var gImgId = 1;
 var gImgs = [{
@@ -94,10 +96,24 @@ var gImgs = [{
     },
 ]
 
-function imgsForDisplay() {
-    return gImgs
+// function imgsForDisplay() {
+//     return gImgs
+// }
+
+function imgsForDisplay(typing) {
+    if (!typing) return gImgs
+    var fitImgs = []
+    var imgs = gImgs
+    imgs.forEach(function(img) {
+        img.keywords.forEach(function(keyword) {
+            if (keyword.slice(0, typing.length) === typing &&
+                !fitImgs.includes(img)) {
+                fitImgs.push(img)
+            }
+        })
+    })
+    return fitImgs
 }
-console.log(gImgs);
 
 
 // MEME
@@ -106,22 +122,27 @@ var gMeme = {
     selectedLineIdx: 0,
     lines: [{
             txt: 'meme txt 1',
+            font: 'Impact',
             size: 30,
             align: 'center',
-            color: 'black',
+            color: 'white',
             locX: 225,
             locY: 70
         },
         {
             txt: 'meme txt 2',
+            font: 'Impact',
             size: 50,
             align: 'center',
-            color: 'black',
+            color: 'white',
             locX: 225,
-            locY: 400
+            locY: 400,
         }
     ]
 }
+
+//SAVED MEMES
+var gPreviousMeme = loadFromStorage(IMG_KEY);
 
 function getMeme() {
     return gMeme
@@ -145,19 +166,77 @@ function setSize(diff) {
     gMeme.lines[gMeme.selectedLineIdx].size += diff
 }
 
+function setFontType(fontType) {
+    gMeme.lines[gMeme.selectedLineIdx].font = fontType
+}
+
+function setColor(color) {
+    gMeme.lines[gMeme.selectedLineIdx].color = color
+}
+
+function setDiraction(diraction) {
+    gMeme.lines[gMeme.selectedLineIdx].align = diraction
+}
+
 function setLocY(diff) {
     gMeme.lines[gMeme.selectedLineIdx].locY += diff
+}
+
+function setLocX(locX) {
+    gMeme.lines[gMeme.selectedLineIdx].locX = locX
+}
+
+function deleteLine() {
+    if (!gMeme.lines) return
+    gMeme.lines.splice(gMeme.selectedLineIdx, 1)
+}
+
+function createLine() {
+    var newLine = {
+        txt: 'write here',
+        font: 'Impact',
+        size: 30,
+        align: 'center',
+        color: 'white',
+        locX: 225,
+        locY: 200
+    }
+    if (gMeme.lines.length === 0) newLine.locY = 70
+    else if (gMeme.lines.length === 1) {
+        newLine.locY = 400
+        newLine.size = 50
+    }
+
+    gMeme.lines.push(newLine)
 }
 
 function setSelectedLineIdx() {
     gMeme.selectedLineIdx++;
     if (gMeme.selectedLineIdx > gMeme.lines.length - 1) gMeme.selectedLineIdx = 0
-    return gMeme.selectedLineIdx
+        // return gMeme.selectedLineIdx
 }
 
 function setSelectedImgId(imgId) {
     gMeme.selectedImgId = +imgId
 }
+
+function saveMemeToLocalStorage(imgTxt) {
+    if (!gPreviousMeme) gPreviousMeme = []
+    gPreviousMeme.push(imgTxt)
+    saveToStorage(IMG_KEY, gPreviousMeme)
+}
+
+function getPreMemes() {
+    var preMemes = loadFromStorage(IMG_KEY)
+    return preMemes
+}
+
+function setLineLocation(lineIdx, offsetX, offsetY) {
+    gMeme.selectedLineIdx = lineIdx
+    gMeme.lines[lineIdx].locX = offsetX
+    gMeme.lines[lineIdx].locY = offsetY
+}
+
 
 
 //STORAGE
