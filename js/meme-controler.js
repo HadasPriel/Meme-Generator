@@ -54,7 +54,11 @@ function onSwitchLine() {
 }
 
 function addBorder(currLine) {
-    console.log('continue');
+    console.log('add border/bgc');
+}
+
+function onSaveMeme() {
+
 }
 
 function resizeCanvas() {
