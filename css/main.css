@@ -346,11 +346,4 @@ canvas {
         width: 465px;
         height: 465px;
     }
-    .meme-editor .tools-container {
-        width: 350px;
-        height: 350px;
-        margin: 0 20px;
-        border-radius: 2em;
-        padding: 40px;
-    }
 }
