@@ -20,16 +20,23 @@
             <button class="hamburger" onclick="openMobileMenu()">☰</button>
         </div>
     </header>
-
     <section class="gallery-section main-layout">
         <div class="nav-gallery">
-            <input class="search-gallery" type="txt" placeholder="Search" onkeyup="onSerchImg(value)" />
-            <div class="key-words">words</div>
+            <input class="search-gallery" type="text" placeholder="Search" onkeyup="onSerchImg(value)" />
+            <!-- <input class="search-gallery" list="keywords" placeholder="Search" onkeyup="onSerchImg(value)" />
+            <datalist class="search-list" id="keywords">
+                <option value="animals">
+                <option value="angry">
+                <option value="baby">
+                <option value="cute">
+                <option value="kiss">
+                <option value="man">
+            </datalist> -->
             <input type="file" class="gallery-btn" onchange="onUploadImg(value)">Upload Photo</input>
+            <div class="key-words">words</div>
         </div>
-        <div class="gallery-contant flex">
-            <div class="img-container main-layout flex wrap"></div>
-        </div>
+        <div class="img-container main-layout "></div>
+        <!-- <div class="img-container main-layout flex wrap"></div> -->
     </section>
 
     <section class="meme-editor main-layout flex justify-center align-center">
@@ -53,14 +60,26 @@
                     <option>Algerian</option>
                     <option>Bernard MT Condensed</option>
                 </select>
-                <button class="align-line tools-btn" onclick="onTxtLocX(100)"><img src="design/img/left.png"/></button>
-                <button class="align-line tools-btn" onclick="onTxtLocX(350)"><img src="design/img/right.png"/></button>
-                <button class="align-line tools-btn" onclick="onTxtLocX(225)"><img src="design/img/center.png"/></button>
-                <button class="bold tools-btn" onclick="onTxtLocX(350)">B</button>
                 <label for="color" class="color-input tools-btn"><img src="design/img/color.png"/></label>
+                <button class="align-line tools-btn" onclick="onTxtLocX(100)"><img src="design/img/left.png"/></button>
+                <button class="align-line tools-btn" onclick="onTxtLocX(225)"><img src="design/img/center.png"/></button>
+                <button class="align-line tools-btn" onclick="onTxtLocX(350)"><img src="design/img/right.png"/></button>
+                <button class="bold tools-btn" onclick="onTxtLocX(350)">B</button>
                 <input id="color" type="color" class="color-input" onchange="onColor(value)" />
             </div>
-            <!-- <div class="stikers-container tool"></div> -->
+            <div class="stickers-container tool">
+                <img class="sticker" src="img/stickers/hat.png" onclick="onAddSticker('hat')" />
+                <img class="sticker" src="img/stickers/think.png" onclick="onAddSticker('think')" />
+                <img class="sticker" src="img/stickers/sun-glasses.png" onclick="onAddSticker('sun-glasses')" />
+                <img class="sticker" src="img/stickers/kiss.png" onclick="onAddSticker('kiss')" />
+                <img class="sticker" src="img/stickers/menorah.png" onclick="onAddSticker('menorah')" />
+                <br/>
+                <button class="stiker-btn" onclick="sizeStiker(10)">+</button>
+                <button class="stiker-btn" onclick="sizeStiker(-10)">-</button>
+                <button class="stiker-btn" onclick="switchStiker()">S</button>
+                <button class="stiker-btn" onclick="deleteStiker()">D</button>
+                <button class="stiker-btn" onclick="rotateStiker()">R</button>
+            </div>
             <div class="tools3 tool">
                 <button class="save tools-btn" onclick="onSaveMeme()"> Save</button>
                 <a class="download tools-btn" href="#" onclick="downloadCanvas(this)" download="">Download</a>
@@ -75,6 +94,9 @@
         <div class="previous-container"></div>
     </section>
 
+    <footer class="main-layout">
+        <small>made by <span>Hadas Priel</span> for Coding Academy November 2020</small>
+    </footer>
 
 
     <!-- <script src="js/img-servise.js"></script> -->
@@ -82,8 +104,5 @@
     <script src="js/meme-controler.js"></script>
 </body>
 
-<footer>
-    add footer
-</footer>
 
 </html>

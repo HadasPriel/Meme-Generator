@@ -2,6 +2,32 @@
 
 const IMG_KEY = 'imgKey'
 
+var gKeywords = {
+    angry: 0,
+    important: 0,
+    speech: 0,
+    animals: 8,
+    cute: 7,
+    kiss: 1,
+    baby: 7,
+    sleep: 4,
+    success: 3,
+    surprise: 5,
+    clown: 3,
+    laugh: 5,
+    man: 9,
+    drink: 7,
+    happy: 4
+}
+
+function getKeywords() {
+    return gKeywords
+}
+
+function addCommon(keyword) {
+    gKeywords[keyword]++
+}
+
 // IMAGES:
 var gImgId = 1;
 var gImgs = [{
@@ -112,6 +138,24 @@ var gImgs = [{
         keywords: ['encourage', 'scared', 'toy story'],
         ratio: 1
     },
+    {
+        id: gImgId,
+        url: `${gImgId++}.jpg`,
+        keywords: ['woman', 'success', 'happy'],
+        ratio: 1
+    },
+    {
+        id: gImgId,
+        url: `${gImgId++}.jpg`,
+        keywords: ['dog', 'animals', 'cute'],
+        ratio: 1.5
+    },
+    {
+        id: gImgId,
+        url: `${gImgId++}.jpg`,
+        keywords: ['woman', 'happy', 'dance'],
+        ratio: 1.37
+    },
 ]
 
 
@@ -153,7 +197,8 @@ var gMeme = {
             locX: 225,
             locY: 400,
         }
-    ]
+    ],
+    stickers: []
 }
 
 //SAVED MEMES
@@ -252,7 +297,25 @@ function setLineLocation(lineIdx, offsetX, offsetY) {
     gMeme.lines[lineIdx].locY = offsetY
 }
 
+function setStickerLocation(index, offsetX, offsetY) {
+    gMeme.stickers[index].locX = offsetX
+    gMeme.stickers[index].locY = offsetY
+}
 
+function createSticker(img) {
+    var currSticker = {
+        name: img,
+        locX: 0,
+        locY: 0,
+        height: 100,
+        width: 100
+    }
+    gMeme.stickers.push(currSticker)
+}
+
+function getStikers() {
+    return gMeme.stickers
+}
 
 //STORAGE
 function loadFromStorage(key) {

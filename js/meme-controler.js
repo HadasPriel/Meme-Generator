@@ -8,6 +8,7 @@ function onInit() {
     renderImgs()
     rendrCanvas()
     CanvasEvListeners()
+    renderKeywords()
 }
 
 
@@ -109,6 +110,17 @@ function addBorder() {
     gCtx.stroke();
 }
 
+function addStickers() {
+    var stickers = getStikers()
+    stickers.forEach(function(sticker) {
+        var img = new Image();
+        img.src = `img/stickers/${sticker.name}.png`
+        img.onload = () => {
+            gCtx.drawImage(img, sticker.locX, sticker.locY, (sticker.width), (sticker.height))
+        }
+    })
+}
+
 function onSaveMeme() {
     const data = gCanvas.toDataURL();
     saveMemeToLocalStorage(data)
@@ -124,10 +136,10 @@ function onRenderMemes() {
     preMemes.forEach(function(preMeme) {
         strHtml += `<img class="image" src="${preMeme}"/>`
     })
-    var elPreContainre = document.querySelector('.previous-container')
-    elPreContainre.innerHTML = strHtml
+
     var elPreContainre = document.querySelector('.previous-memes')
     elPreContainre.style.display = 'block'
+    elPreContainre.innerHTML = strHtml
     var elGallery = document.querySelector('.gallery-section')
     elGallery.style.display = 'none'
     var elCanvas = document.querySelector('.canvas-container')
@@ -152,14 +164,24 @@ function onRenderGallery() {
     elToolsContainer.style.display = 'none'
 
     var elMyMeme = document.querySelector('.my-memes')
-    var elMyGallery = document.querySelector('.my-gallery')
     elMyMeme.classList.toggle('active')
+
+    var elMyGallery = document.querySelector('.my-gallery')
     elMyGallery.classList.toggle('active')
 }
 
 function onSerchImg(typing) {
     imgsForDisplay(typing)
     renderImgs(typing)
+    var elSearch = document.querySelector('.search-gallery')
+    elSearch.addEventListener("change", function() {
+        var keywords = getKeywords()
+        var words = Object.keys(keywords)
+        words.forEach(function(word) {
+            if (typing === word) addCommon(word)
+            renderKeywords()
+        })
+    })
 }
 
 function resizeCanvas(imgRatio) {
@@ -173,6 +195,10 @@ function resizeCanvas(imgRatio) {
 
 
 function CanvasEvListeners() {
+    gCanvas.addEventListener("touchmove", function(event) {
+        event.preventDefault()
+    })
+
     gCanvas.addEventListener("mousedown", function() {
         gIsDrag = true
     })
@@ -194,10 +220,21 @@ function CanvasEvListeners() {
             var startY = line.locY - height + 5
             if (offsetX > startX && offsetX < startX + width &&
                 offsetY > startY && offsetY < startY + height) {
-                setLineLocation(index, offsetX, offsetY)
+                setLineLocation(index, offsetX, offsetY + height / 2)
                 rendrCanvas()
             }
         })
+
+        let stickers = currMeme.stickers
+        stickers.forEach(function(sticker, index) {
+            if (offsetX > sticker.locX && offsetX < (sticker.locX + sticker.width) &&
+                offsetY > sticker.locY && offsetY < (sticker.locY + sticker.height)) {
+                setStickerLocation(index, offsetX - sticker.width / 2, offsetY - sticker.height / 2)
+                rendrCanvas()
+            }
+        })
+
+
     })
 }
 
@@ -205,6 +242,24 @@ function onUploadImg(img) {
     console.log(img);
 }
 
+function renderKeywords() {
+    var keywords = getKeywords()
+    var words = Object.keys(keywords)
+    var strHTML = ''
+    words.forEach(function(word) {
+        if (keywords[word] > 2) {
+            strHTML += `<span onclick="onKeyword('${word}')" style="cursor: pointer; font-size: ${+(keywords[word]) * 4}px; ">${word} </span>`
+        }
+    })
+    var elWordsContainer = document.querySelector('.key-words')
+    elWordsContainer.innerHTML = strHTML
+}
+
+function onKeyword(keyword) {
+    renderImgs(keyword)
+    addCommon(keyword)
+    renderKeywords()
+}
 
 function downloadCanvas(elLink) {
     const data = gCanvas.toDataURL();
@@ -219,18 +274,23 @@ function openMobileMenu() {
     elScreen.classList.toggle('dark')
 }
 
+function onAddSticker(img) {
+    createSticker(img)
+    rendrCanvas()
+}
+
 // DRAW FUNCTIONS
 function drawImg() {
     var elContainer = document.querySelector('.canvas-container');
 
-
-    var img = new Image();
     let currMeme = getMeme()
+    var img = new Image();
     img.src = getImg();
     img.onload = () => {
         gCtx.drawImage(img, 0, 0, elContainer.offsetWidth, elContainer.offsetHeight)
         drawText(currMeme.lines)
         addBorder()
+        addStickers()
     }
 }
 
