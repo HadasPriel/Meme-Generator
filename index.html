@@ -9,6 +9,7 @@
 </head>
 
 <body onload="onInit()">
+    <div class="screen" onclick="openMobileMenu()"></div>
     <header class="main-header">
         <div class="header-contant main-layout flex align-center">
             <img class="logo-img" src="design/LOGO.png" />
@@ -16,7 +17,7 @@
                 <li><button class="my-gallery nav-item active" onclick="onRenderGallery()">Create Meme</button></li>
                 <li><button class="my-memes nav-item" onclick="onRenderMemes()">My Memes</button></li>
             </ul>
-            <button class="hamburger">☰</button>
+            <button class="hamburger" onclick="openMobileMenu()">☰</button>
         </div>
     </header>
 
@@ -24,20 +25,19 @@
         <div class="nav-gallery">
             <input class="search-gallery" type="txt" placeholder="Search" onkeyup="onSerchImg(value)" />
             <div class="key-words">words</div>
-            <button class="gallery-btn">More</button>
+            <input type="file" class="gallery-btn" onchange="onUploadImg(value)">Upload Photo</input>
         </div>
         <div class="gallery-contant flex">
             <div class="img-container main-layout flex wrap"></div>
-            <div class="scroll"></div>
         </div>
     </section>
 
-    <section class="meme-editor main-layout flex justify-center">
+    <section class="meme-editor main-layout flex justify-center align-center">
         <div class="canvas-container editor-ch">
             <canvas id="meme-canvas" height="460" width="460"></canvas>
         </div>
         <div class="tools-container">
-            <input type="txt" class="txt-input" placeholder="write here" onchange="onTxt(value)" />
+            <input type="txt" class="txt-input" placeholder="write here" onkeyup="onTxt(value)" />
             <div class="tools1 tool">
                 <button class="switch-line tools-btn" onclick="onSwitchLine()">⇄</button>
                 <button class="add-line tools-btn" onclick="onLineAdd()">+</button>

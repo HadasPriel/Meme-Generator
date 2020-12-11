@@ -7,98 +7,113 @@ var gImgId = 1;
 var gImgs = [{
         id: gImgId,
         url: `${gImgId++}.jpg`,
-        keywords: ['angry', 'important', 'speech']
+        keywords: ['angry', 'important', 'speech'],
+        ratio: 1
     },
     {
         id: gImgId,
         url: `${gImgId++}.jpg`,
-        keywords: ['animals', 'cute', 'kiss']
+        keywords: ['animals', 'cute', 'kiss'],
+        ratio: 1.5
     },
     {
         id: gImgId,
         url: `${gImgId++}.jpg`,
-        keywords: ['baby', 'animals', 'cute']
+        keywords: ['baby', 'animals', 'cute'],
+        ratio: 1
     },
     {
         id: gImgId,
         url: `${gImgId++}.jpg`,
-        keywords: ['sleep', 'animals', 'copmuter']
+        keywords: ['sleep', 'animals', 'copmuter'],
+        ratio: 1
     },
     {
         id: gImgId,
         url: `${gImgId++}.jpg`,
-        keywords: ['success', 'baby', 'cute']
+        keywords: ['success', 'baby', 'cute'],
+        ratio: 1.56
     },
     {
         id: gImgId,
         url: `${gImgId++}.jpg`,
-        keywords: ['speech', 'snob', 'important']
+        keywords: ['speech', 'snob', 'important'],
+        ratio: 1
     },
     {
         id: gImgId,
         url: `${gImgId++}.jpg`,
-        keywords: ['surprise', 'cute', 'baby']
+        keywords: ['surprise', 'cute', 'baby'],
+        ratio: 1
     },
     {
         id: gImgId,
         url: `${gImgId++}.jpg`,
-        keywords: ['happy', 'clown', 'listen']
+        keywords: ['happy', 'clown', 'listen'],
+        ratio: 1
     },
     {
         id: gImgId,
         url: `${gImgId++}.jpg`,
-        keywords: ['baby', 'laugh', 'happy']
+        keywords: ['baby', 'laugh', 'happy'],
+        ratio: 1.6
     },
     {
         id: gImgId,
         url: `${gImgId++}.jpg`,
-        keywords: ['man', 'laugh', 'happy']
+        keywords: ['man', 'laugh', 'happy'],
+        ratio: 1
     },
     {
         id: gImgId,
         url: `${gImgId++}.jpg`,
-        keywords: ['boxing', 'kiss', 'man']
+        keywords: ['boxing', 'kiss', 'man'],
+        ratio: 1.33
     },
     {
         id: gImgId,
         url: `${gImgId++}.jpg`,
-        keywords: ['surprise', 'man', 'inportant']
+        keywords: ['surprise', 'man', 'inportant'],
+        ratio: 1
     },
     {
         id: gImgId,
         url: `${gImgId++}.jpg`,
-        keywords: ['drink', 'man', 'happy']
+        keywords: ['drink', 'man', 'happy'],
+        ratio: 1.5
     },
     {
         id: gImgId,
         url: `${gImgId++}.jpg`,
-        keywords: ['serious', 'man', 'sun glass', 'matrix']
+        keywords: ['serious', 'man', 'sun glass', 'matrix'],
+        ratio: 1
     },
     {
         id: gImgId,
         url: `${gImgId++}.jpg`,
-        keywords: ['speech', 'man', 'game of thrones']
+        keywords: ['speech', 'man', 'game of thrones'],
+        ratio: 1.69
     },
     {
         id: gImgId,
         url: `${gImgId++}.jpg`,
-        keywords: ['laugh', 'funny', 'man']
+        keywords: ['laugh', 'funny', 'man'],
+        ratio: 1
     },
     {
         id: gImgId,
         url: `${gImgId++}.jpg`,
-        keywords: ['speech', 'man', 'putin']
+        keywords: ['speech', 'man', 'putin'],
+        ratio: 1
     },
     {
         id: gImgId,
         url: `${gImgId++}.jpg`,
-        keywords: ['encourage', 'scared', 'toy story']
+        keywords: ['encourage', 'scared', 'toy story'],
+        ratio: 1
     },
 ]
 
-// function imgsForDisplay() {
-//     return gImgs
-// }
 
 function imgsForDisplay(typing) {
     if (!typing) return gImgs
@@ -106,7 +121,7 @@ function imgsForDisplay(typing) {
     var imgs = gImgs
     imgs.forEach(function(img) {
         img.keywords.forEach(function(keyword) {
-            if (keyword.slice(0, typing.length) === typing &&
+            if (keyword.slice(0, typing.length) === typing.toLowerCase() &&
                 !fitImgs.includes(img)) {
                 fitImgs.push(img)
             }
@@ -121,7 +136,7 @@ var gMeme = {
     selectedImgId: 1,
     selectedLineIdx: 0,
     lines: [{
-            txt: 'meme txt 1',
+            txt: 'EDIT TEXT',
             font: 'Impact',
             size: 30,
             align: 'center',
@@ -130,7 +145,7 @@ var gMeme = {
             locY: 70
         },
         {
-            txt: 'meme txt 2',
+            txt: 'EDIT TEXT',
             font: 'Impact',
             size: 50,
             align: 'center',

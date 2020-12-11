@@ -15,7 +15,7 @@ function renderImgs(typing) {
     let strHtml = '';
     let imgs = imgsForDisplay(typing)
     imgs.forEach(function(img) {
-        strHtml += `<img class="image" onclick="onImg('${img.id}')" src="img/${img.url}" />`;
+        strHtml += `<img class="image" onclick="onImg('${img.id}', '${img.ratio}')" src="img/${img.url}" />`;
     })
     const elImgContainer = document.querySelector('.img-container');
     elImgContainer.innerHTML = strHtml;
@@ -25,27 +25,30 @@ function rendrCanvas() {
     gCanvas = document.getElementById('meme-canvas')
     gCtx = gCanvas.getContext('2d')
     drawImg()
-
 }
 
-function onImg(imgId) {
+function onImg(imgId, imgRatio) {
     var elGallerySection = document.querySelector('.gallery-section')
     var elCanvasContainer = document.querySelector('.canvas-container')
     var elToolsContainer = document.querySelector('.tools-container')
     elGallerySection.style.display = 'none'
     elCanvasContainer.style.display = 'block'
     elToolsContainer.style.display = 'block'
+        // var elMyGallery = document.querySelector('.my-gallery')
+        // elMyGallery.classList.toggle('active')
 
     setSelectedImgId(imgId)
-    resizeCanvas()
+    resizeCanvas(imgRatio)
     rendrCanvas()
 }
 
 function onTxt(text) {
     setLineTxt(text)
     rendrCanvas()
-
-    document.querySelector('.txt-input').value = ''
+    var elInput = document.querySelector('.txt-input')
+    elInput.addEventListener("change", function() {
+        elInput.value = ''
+    })
 }
 
 function onTxtFont(font) {
@@ -84,7 +87,6 @@ function onLineAdd() {
 }
 
 function onSwitchLine() {
-    // deletBorder()
     setSelectedLineIdx()
     rendrCanvas()
 }
@@ -92,7 +94,7 @@ function onSwitchLine() {
 function addBorder() {
     var currMeme = getMeme()
     var currLine = currMeme.selectedLineIdx
-    if (!currLine) return //still eror!
+    if (currLine === undefined) return //still eror
     var offsetX = currMeme.lines[currLine].locX
     var offsetY = currMeme.lines[currLine].locY
     var height = currMeme.lines[currLine].size
@@ -134,8 +136,8 @@ function onRenderMemes() {
     elTools.style.display = 'none'
 
     var elMyMeme = document.querySelector('.my-memes')
-    var elMyGallery = document.querySelector('.my-gallery')
     elMyMeme.classList.toggle('active')
+    var elMyGallery = document.querySelector('.my-gallery')
     elMyGallery.classList.toggle('active')
 }
 
@@ -160,8 +162,11 @@ function onSerchImg(typing) {
     renderImgs(typing)
 }
 
-function resizeCanvas() {
+function resizeCanvas(imgRatio) {
     var elContainer = document.querySelector('.canvas-container');
+    var elHeight = elContainer.offsetHeight
+    elContainer.style.width = `${elHeight * imgRatio}px`
+
     gCanvas.width = elContainer.offsetWidth
     gCanvas.height = elContainer.offsetHeight
 }
@@ -196,6 +201,10 @@ function CanvasEvListeners() {
     })
 }
 
+function onUploadImg(img) {
+    console.log(img);
+}
+
 
 function downloadCanvas(elLink) {
     const data = gCanvas.toDataURL();
@@ -203,14 +212,23 @@ function downloadCanvas(elLink) {
     elLink.download = 'my-img.jpg';
 }
 
+function openMobileMenu() {
+    var elMenu = document.querySelector('.main-nav')
+    elMenu.classList.toggle('open-mobile')
+    let elScreen = document.querySelector('.screen')
+    elScreen.classList.toggle('dark')
+}
 
 // DRAW FUNCTIONS
 function drawImg() {
+    var elContainer = document.querySelector('.canvas-container');
+
+
     var img = new Image();
     let currMeme = getMeme()
     img.src = getImg();
     img.onload = () => {
-        gCtx.drawImage(img, 0, 0, 460, 460) //get the canvas-container size insted
+        gCtx.drawImage(img, 0, 0, elContainer.offsetWidth, elContainer.offsetHeight)
         drawText(currMeme.lines)
         addBorder()
     }

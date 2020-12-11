@@ -44,6 +44,20 @@ button {
     max-width: 430px;
 }
 
+.screen {
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.383);
+    opacity: 0;
+    transition: opacity 1s;
+}
+
+.dark {
+    opacity: 1;
+    position: fixed;
+    cursor: pointer;
+}
+
 
 /* HEADER */
 
@@ -59,10 +73,27 @@ button {
     height: 20px;
 }
 
+.main-nav {
+    position: absolute;
+    flex-direction: column;
+    background-color: #0c98b9;
+    border-radius: 2em 0 2em 2em;
+    top: -50%;
+    right: 0;
+    transition: top 1s;
+    /* top: 60px;
+    right: -80%;
+    transition: right 1s; */
+}
+
+.open-mobile {
+    top: 60px;
+    /* right: 0; */
+}
+
 .header-contant .nav-item {
-    display: none;
     padding: 0.2em 1em;
-    margin: 10px;
+    margin: 30px 10px;
     font-family: PoppinsM;
     font-size: 1.3125rem;
     height: 2em;
@@ -124,17 +155,8 @@ button {
 
 .image {
     cursor: pointer;
-    width: 110px;
     height: 110px;
     margin: 15px;
-}
-
-.gallery-section .scroll {
-    margin: 5px;
-    display: inline-block;
-    background-color: #22252c;
-    width: 50px;
-    border-radius: 2em;
 }
 
 
@@ -313,31 +335,33 @@ canvas {
     .header-contant .logo-img {
         height: 30px;
     }
+    .header-contant .main-nav {
+        position: static;
+        /* display: inline-block; */
+        flex-direction: row;
+        background-color: rgba(65, 78, 87, 0);
+    }
     .header-contant .nav-item {
-        display: inline-block;
+        margin: 10px;
     }
     .hamburger {
         display: none;
     }
     .nav-gallery .search-gallery {
         display: inline-block;
-        width: 43%;
+        width: 30%;
         margin-bottom: 0;
     }
     .nav-gallery .key-words {
-        width: 43%;
+        width: 50%;
     }
     .nav-gallery .gallery-btn {
-        width: 10%;
+        width: 15%;
     }
     .image {
         cursor: pointer;
-        width: 170px;
         height: 170px;
         margin: 15px;
-    }
-    .gallery-section .scroll {
-        margin: 20px;
     }
     .meme-editor {
         flex-direction: row;
