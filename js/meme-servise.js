@@ -20,6 +20,184 @@ var gKeywords = {
     happy: 4
 }
 
+var gImgId = 1;
+var gImgs = [{
+        id: gImgId,
+        url: `${gImgId++}.jpg`,
+        keywords: ['angry', 'important', 'speech'],
+        ratio: 1,
+        isInput: false
+    },
+    {
+        id: gImgId,
+        url: `${gImgId++}.jpg`,
+        keywords: ['animals', 'cute', 'kiss'],
+        ratio: 1.5,
+        isInput: false
+    },
+    {
+        id: gImgId,
+        url: `${gImgId++}.jpg`,
+        keywords: ['baby', 'animals', 'cute'],
+        ratio: 1,
+        isInput: false
+    },
+    {
+        id: gImgId,
+        url: `${gImgId++}.jpg`,
+        keywords: ['sleep', 'animals', 'copmuter'],
+        ratio: 1,
+        isInput: false
+    },
+    {
+        id: gImgId,
+        url: `${gImgId++}.jpg`,
+        keywords: ['success', 'baby', 'cute'],
+        ratio: 1.56,
+        isInput: false
+    },
+    {
+        id: gImgId,
+        url: `${gImgId++}.jpg`,
+        keywords: ['speech', 'snob', 'important'],
+        ratio: 1,
+        isInput: false
+    },
+    {
+        id: gImgId,
+        url: `${gImgId++}.jpg`,
+        keywords: ['surprise', 'cute', 'baby'],
+        ratio: 1,
+        isInput: false
+    },
+    {
+        id: gImgId,
+        url: `${gImgId++}.jpg`,
+        keywords: ['happy', 'clown', 'listen'],
+        ratio: 1,
+        isInput: false
+    },
+    {
+        id: gImgId,
+        url: `${gImgId++}.jpg`,
+        keywords: ['baby', 'laugh', 'happy'],
+        ratio: 1.6,
+        isInput: false
+    },
+    {
+        id: gImgId,
+        url: `${gImgId++}.jpg`,
+        keywords: ['man', 'laugh', 'happy'],
+        ratio: 1,
+        isInput: false
+    },
+    {
+        id: gImgId,
+        url: `${gImgId++}.jpg`,
+        keywords: ['boxing', 'kiss', 'man'],
+        ratio: 1.33,
+        isInput: false
+    },
+    {
+        id: gImgId,
+        url: `${gImgId++}.jpg`,
+        keywords: ['surprise', 'man', 'inportant'],
+        ratio: 1,
+        isInput: false
+    },
+    {
+        id: gImgId,
+        url: `${gImgId++}.jpg`,
+        keywords: ['drink', 'man', 'happy'],
+        ratio: 1.5,
+        isInput: false
+    },
+    {
+        id: gImgId,
+        url: `${gImgId++}.jpg`,
+        keywords: ['serious', 'man', 'sun glass', 'matrix'],
+        ratio: 1,
+        isInput: false
+    },
+    {
+        id: gImgId,
+        url: `${gImgId++}.jpg`,
+        keywords: ['speech', 'man', 'game of thrones'],
+        ratio: 1.69,
+        isInput: false
+    },
+    {
+        id: gImgId,
+        url: `${gImgId++}.jpg`,
+        keywords: ['laugh', 'funny', 'man'],
+        ratio: 1,
+        isInput: false
+    },
+    {
+        id: gImgId,
+        url: `${gImgId++}.jpg`,
+        keywords: ['speech', 'man', 'putin'],
+        ratio: 1,
+        isInput: false
+    },
+    {
+        id: gImgId,
+        url: `${gImgId++}.jpg`,
+        keywords: ['encourage', 'scared', 'toy story'],
+        ratio: 1,
+        isInput: false
+    },
+    {
+        id: gImgId,
+        url: `${gImgId++}.jpg`,
+        keywords: ['woman', 'success', 'happy'],
+        ratio: 1,
+        isInput: false
+    },
+    {
+        id: gImgId,
+        url: `${gImgId++}.jpg`,
+        keywords: ['dog', 'animals', 'cute'],
+        ratio: 1.5,
+        isInput: false
+    },
+    {
+        id: gImgId,
+        url: `${gImgId++}.jpg`,
+        keywords: ['woman', 'happy', 'dance'],
+        ratio: 1.37,
+        isInput: false
+    },
+]
+
+var gMeme = {
+    selectedImgId: 5,
+    selectedLineIdx: 0,
+    lines: [{
+            txt: 'WOW!',
+            font: 'Impact',
+            size: 40,
+            align: 'center',
+            color: 'white',
+            locX: 250,
+            locY: 70
+        },
+        {
+            txt: 'I built an awsome meme gen!',
+            font: 'Impact',
+            size: 35,
+            align: 'center',
+            color: 'white',
+            locX: 250,
+            locY: 400,
+        }
+    ],
+    stickers: []
+}
+
+var gPreviousMeme = loadFromStorage(IMG_KEY);
+
+// KEYWORDS FUNCTIONS
 function getKeywords() {
     return gKeywords
 }
@@ -28,136 +206,7 @@ function addCommon(keyword) {
     gKeywords[keyword]++
 }
 
-// IMAGES:
-var gImgId = 1;
-var gImgs = [{
-        id: gImgId,
-        url: `${gImgId++}.jpg`,
-        keywords: ['angry', 'important', 'speech'],
-        ratio: 1
-    },
-    {
-        id: gImgId,
-        url: `${gImgId++}.jpg`,
-        keywords: ['animals', 'cute', 'kiss'],
-        ratio: 1.5
-    },
-    {
-        id: gImgId,
-        url: `${gImgId++}.jpg`,
-        keywords: ['baby', 'animals', 'cute'],
-        ratio: 1
-    },
-    {
-        id: gImgId,
-        url: `${gImgId++}.jpg`,
-        keywords: ['sleep', 'animals', 'copmuter'],
-        ratio: 1
-    },
-    {
-        id: gImgId,
-        url: `${gImgId++}.jpg`,
-        keywords: ['success', 'baby', 'cute'],
-        ratio: 1.56
-    },
-    {
-        id: gImgId,
-        url: `${gImgId++}.jpg`,
-        keywords: ['speech', 'snob', 'important'],
-        ratio: 1
-    },
-    {
-        id: gImgId,
-        url: `${gImgId++}.jpg`,
-        keywords: ['surprise', 'cute', 'baby'],
-        ratio: 1
-    },
-    {
-        id: gImgId,
-        url: `${gImgId++}.jpg`,
-        keywords: ['happy', 'clown', 'listen'],
-        ratio: 1
-    },
-    {
-        id: gImgId,
-        url: `${gImgId++}.jpg`,
-        keywords: ['baby', 'laugh', 'happy'],
-        ratio: 1.6
-    },
-    {
-        id: gImgId,
-        url: `${gImgId++}.jpg`,
-        keywords: ['man', 'laugh', 'happy'],
-        ratio: 1
-    },
-    {
-        id: gImgId,
-        url: `${gImgId++}.jpg`,
-        keywords: ['boxing', 'kiss', 'man'],
-        ratio: 1.33
-    },
-    {
-        id: gImgId,
-        url: `${gImgId++}.jpg`,
-        keywords: ['surprise', 'man', 'inportant'],
-        ratio: 1
-    },
-    {
-        id: gImgId,
-        url: `${gImgId++}.jpg`,
-        keywords: ['drink', 'man', 'happy'],
-        ratio: 1.5
-    },
-    {
-        id: gImgId,
-        url: `${gImgId++}.jpg`,
-        keywords: ['serious', 'man', 'sun glass', 'matrix'],
-        ratio: 1
-    },
-    {
-        id: gImgId,
-        url: `${gImgId++}.jpg`,
-        keywords: ['speech', 'man', 'game of thrones'],
-        ratio: 1.69
-    },
-    {
-        id: gImgId,
-        url: `${gImgId++}.jpg`,
-        keywords: ['laugh', 'funny', 'man'],
-        ratio: 1
-    },
-    {
-        id: gImgId,
-        url: `${gImgId++}.jpg`,
-        keywords: ['speech', 'man', 'putin'],
-        ratio: 1
-    },
-    {
-        id: gImgId,
-        url: `${gImgId++}.jpg`,
-        keywords: ['encourage', 'scared', 'toy story'],
-        ratio: 1
-    },
-    {
-        id: gImgId,
-        url: `${gImgId++}.jpg`,
-        keywords: ['woman', 'success', 'happy'],
-        ratio: 1
-    },
-    {
-        id: gImgId,
-        url: `${gImgId++}.jpg`,
-        keywords: ['dog', 'animals', 'cute'],
-        ratio: 1.5
-    },
-    {
-        id: gImgId,
-        url: `${gImgId++}.jpg`,
-        keywords: ['woman', 'happy', 'dance'],
-        ratio: 1.37
-    },
-]
-
+//GALLERY FUNCTIONS
 
 function imgsForDisplay(typing) {
     if (!typing) return gImgs
@@ -175,34 +224,7 @@ function imgsForDisplay(typing) {
 }
 
 
-// MEME
-var gMeme = {
-    selectedImgId: 1,
-    selectedLineIdx: 0,
-    lines: [{
-            txt: 'EDIT TEXT',
-            font: 'Impact',
-            size: 30,
-            align: 'center',
-            color: 'white',
-            locX: 225,
-            locY: 70
-        },
-        {
-            txt: 'EDIT TEXT',
-            font: 'Impact',
-            size: 50,
-            align: 'center',
-            color: 'white',
-            locX: 225,
-            locY: 400,
-        }
-    ],
-    stickers: []
-}
-
-//SAVED MEMES
-var gPreviousMeme = loadFromStorage(IMG_KEY);
+// MEME FUNCTIONMS
 
 function getMeme() {
     return gMeme
@@ -215,11 +237,30 @@ function getImg() {
         if (img.id === idCurrImg)
             return img
     })
-    return `img/${currImg[0].url}`
+    return currImg[0]
+}
+
+function createInputImg(ev) {
+    var img = {
+        id: gImgId,
+        url: ev.target.files[0],
+        file: ev.target.files[0],
+        keywords: [],
+        ratio: 1,
+        isInput: true
+
+    }
+    gImgs.push(img)
+    gMeme.selectedImgId = img.id
+        // return img.id
 }
 
 function setLineTxt(text) {
     gMeme.lines[gMeme.selectedLineIdx].txt = text
+}
+
+function getLineTxt() {
+    return gMeme.lines[gMeme.selectedLineIdx].txt
 }
 
 function setSize(diff) {
@@ -305,16 +346,28 @@ function setStickerLocation(index, offsetX, offsetY) {
 function createSticker(img) {
     var currSticker = {
         name: img,
-        locX: 0,
-        locY: 0,
+        locX: getRandomIntInclusive(50, 550),
+        locY: getRandomIntInclusive(50, 350),
         height: 100,
-        width: 100
+        width: 100,
+        deg: 45
     }
     gMeme.stickers.push(currSticker)
 }
 
 function getStikers() {
     return gMeme.stickers
+}
+
+function setStickerSise(diff) {
+    if (!gMeme.stickers) return
+    var lastSticker = gMeme.stickers[gMeme.stickers.length - 1]
+    lastSticker.height += diff
+    lastSticker.width += diff
+}
+
+function deleteSticker() {
+    gMeme.stickers.splice(-1, 1)
 }
 
 //STORAGE
@@ -327,4 +380,15 @@ function loadFromStorage(key) {
 function saveToStorage(key, value) {
     var json = JSON.stringify(value);
     localStorage.setItem(key, json);
+}
+
+
+
+
+
+
+
+//UTIL
+function getRandomIntInclusive(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
 }

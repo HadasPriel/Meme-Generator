@@ -12,9 +12,10 @@
     <div class="screen" onclick="openMobileMenu()"></div>
     <header class="main-header">
         <div class="header-contant main-layout flex align-center">
-            <img class="logo-img" src="design/LOGO.png" />
+            <img class="logo-img" src="design/LOGO.png" onclick="showGallery()" />
             <ul class="main-nav clean-list flex">
-                <li><button class="my-gallery nav-item active" onclick="onRenderGallery()">Create Meme</button></li>
+                <li><button class="my-gallery nav-item active" onclick="onRenderGallery()">Gallery</button></li>
+                <li><button class="my-editor nav-item" onclick="showEditor()">Editor</button></li>
                 <li><button class="my-memes nav-item" onclick="onRenderMemes()">My Memes</button></li>
             </ul>
             <button class="hamburger" onclick="openMobileMenu()">☰</button>
@@ -23,23 +24,15 @@
     <section class="gallery-section main-layout">
         <div class="nav-gallery">
             <input class="search-gallery" type="text" placeholder="Search" onkeyup="onSerchImg(value)" />
-            <!-- <input class="search-gallery" list="keywords" placeholder="Search" onkeyup="onSerchImg(value)" />
-            <datalist class="search-list" id="keywords">
-                <option value="animals">
-                <option value="angry">
-                <option value="baby">
-                <option value="cute">
-                <option value="kiss">
-                <option value="man">
-            </datalist> -->
-            <input type="file" class="gallery-btn" onchange="onUploadImg(value)">Upload Photo</input>
-            <div class="key-words">words</div>
+            <label for="upload" class="gallery-btn">Upload Photo</label>
+            <input type="file" class="gallery-btn" id="upload" onchange="onUploadImg(event)" style="display: none;"></input>
+            <div class="key-words"></div>
         </div>
-        <div class="img-container main-layout "></div>
-        <!-- <div class="img-container main-layout flex wrap"></div> -->
+        <div class="img-container main-layout flex"></div>
     </section>
 
     <section class="meme-editor main-layout flex justify-center align-center">
+        <img class="img-holder" style="display: none;" />
         <div class="canvas-container editor-ch">
             <canvas id="meme-canvas" height="460" width="460"></canvas>
         </div>
@@ -74,11 +67,10 @@
                 <img class="sticker" src="img/stickers/kiss.png" onclick="onAddSticker('kiss')" />
                 <img class="sticker" src="img/stickers/menorah.png" onclick="onAddSticker('menorah')" />
                 <br/>
-                <button class="stiker-btn" onclick="sizeStiker(10)">+</button>
-                <button class="stiker-btn" onclick="sizeStiker(-10)">-</button>
-                <button class="stiker-btn" onclick="switchStiker()">S</button>
-                <button class="stiker-btn" onclick="deleteStiker()">D</button>
-                <button class="stiker-btn" onclick="rotateStiker()">R</button>
+                <button class="stiker-btn tools-btn" onclick="onSizeSticker(10)">+</button>
+                <button class="stiker-btn tools-btn" onclick="onSizeSticker(-10)">-</button>
+                <button class="stiker-btn tools-btn" onclick="onDeleteSticker()">D</button>
+                <!-- <button class="stiker-btn" onclick="onRotateSticker()">R</button> -->
             </div>
             <div class="tools3 tool">
                 <button class="save tools-btn" onclick="onSaveMeme()"> Save</button>
@@ -87,14 +79,19 @@
             <!-- <button class="up-font tools-btn" onclick="onTxtLocY(-1)">↑</button> -->
             <!-- <button class="down-font tools-btn" onclick="onTxtLocY(1)">↓</button> -->
         </div>
-
+        <div class="modal">
+            <button class="close" onclick="closeModal()">X</button>
+            <h2 class="massage"></h2>
+            <div class="action"></div>
+        </div>
     </section>
 
     <section class="previous-memes main-layout">
         <div class="previous-container"></div>
     </section>
 
-    <footer class="main-layout">
+
+    <footer>
         <small>made by <span>Hadas Priel</span> for Coding Academy November 2020</small>
     </footer>
 
