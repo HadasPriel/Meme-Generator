@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="css/main.css">
 </head>
 
-<body onload="onInit()">
+<body onload="onInit()" class="flex col">
     <div class="screen" onclick="openMobileMenu()"></div>
     <header class="main-header">
         <div class="header-contant main-layout flex align-center">
@@ -28,10 +28,11 @@
             <input type="file" class="gallery-btn" id="upload" onchange="onUploadImg(event)" style="display: none;"></input>
             <div class="key-words"></div>
         </div>
-        <div class="img-container main-layout flex"></div>
+        <div class="img-container main-layout "></div>
+        <!-- <div class="img-container main-layout flex"></div> -->
     </section>
 
-    <section class="meme-editor main-layout flex justify-center align-center">
+    <section class="meme-editor main-layout  justify-center align-center">
         <img class="img-holder" style="display: none;" />
         <div class="canvas-container editor-ch">
             <canvas id="meme-canvas" height="460" width="460"></canvas>
@@ -54,9 +55,9 @@
                     <option>Bernard MT Condensed</option>
                 </select>
                 <label for="color" class="color-input tools-btn"><img src="design/img/color.png"/></label>
-                <button class="align-line tools-btn" onclick="onTxtLocX(100)"><img src="design/img/left.png"/></button>
-                <button class="align-line tools-btn" onclick="onTxtLocX(225)"><img src="design/img/center.png"/></button>
-                <button class="align-line tools-btn" onclick="onTxtLocX(350)"><img src="design/img/right.png"/></button>
+                <button class="align-line tools-btn" onclick="onTxtLocX('right')"><img src="design/img/left.png"/></button>
+                <button class="align-line tools-btn" onclick="onTxtLocX('center')"><img src="design/img/center.png"/></button>
+                <button class="align-line tools-btn" onclick="onTxtLocX('left')"><img src="design/img/right.png"/></button>
                 <button class="bold tools-btn" onclick="onTxtLocX(350)">B</button>
                 <input id="color" type="color" class="color-input" onchange="onColor(value)" />
             </div>
@@ -80,8 +81,10 @@
             <!-- <button class="down-font tools-btn" onclick="onTxtLocY(1)">↓</button> -->
         </div>
         <div class="modal">
-            <button class="close" onclick="closeModal()">X</button>
-            <h2 class="massage"></h2>
+            <div class="flex space">
+                <h2 class="massage"></h2>
+                <button class="close" onclick="closeModal()">X</button>
+            </div>
             <div class="action"></div>
         </div>
     </section>

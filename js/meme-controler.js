@@ -16,14 +16,12 @@ function onInit() {
 //NAVIGATION FUNCTIONS
 
 function showGallery() {
+    var elEditor = document.querySelector('.meme-editor')
     var elGallerySection = document.querySelector('.gallery-section')
-    var elCanvasContainer = document.querySelector('.canvas-container')
-    var elToolsContainer = document.querySelector('.tools-container')
     var elPreContainre = document.querySelector('.previous-memes')
+    elEditor.style.display = 'none'
     elPreContainre.style.display = 'none'
     elGallerySection.style.display = 'block'
-    elCanvasContainer.style.display = 'none'
-    elToolsContainer.style.display = 'none'
     var elMyGallery = document.querySelector('.my-gallery')
     elMyGallery.classList.add('active')
     var elMemes = document.querySelector('.my-memes')
@@ -33,14 +31,12 @@ function showGallery() {
 }
 
 function showMyMeme() {
+    var elEditor = document.querySelector('.meme-editor')
     var elGallerySection = document.querySelector('.gallery-section')
-    var elCanvasContainer = document.querySelector('.canvas-container')
-    var elToolsContainer = document.querySelector('.tools-container')
     var elPreContainre = document.querySelector('.previous-memes')
+    elEditor.style.display = 'none'
     elPreContainre.style.display = 'block'
     elGallerySection.style.display = 'none'
-    elCanvasContainer.style.display = 'none'
-    elToolsContainer.style.display = 'none'
     var elMyGallery = document.querySelector('.my-gallery')
     elMyGallery.classList.remove('active')
     var elMemes = document.querySelector('.my-memes')
@@ -51,14 +47,12 @@ function showMyMeme() {
 }
 
 function showEditor() {
+    var elEditor = document.querySelector('.meme-editor')
     var elGallerySection = document.querySelector('.gallery-section')
-    var elCanvasContainer = document.querySelector('.canvas-container')
-    var elToolsContainer = document.querySelector('.tools-container')
     var elPreContainre = document.querySelector('.previous-memes')
+    elEditor.style.display = 'flex'
     elPreContainre.style.display = 'none'
     elGallerySection.style.display = 'none'
-    elCanvasContainer.style.display = 'block'
-    elToolsContainer.style.display = 'block'
     var elMyGallery = document.querySelector('.my-gallery')
     elMyGallery.classList.remove('active')
     var elMemes = document.querySelector('.my-memes')
@@ -86,17 +80,21 @@ function renderImgs(typing) {
     let strHtml = '';
     let imgs = imgsForDisplay(typing)
     imgs.forEach(function(img) {
-        strHtml += `<img class="image" onclick="onImg('${img.id}', '${img.ratio}')" src="img/${img.url}" />`;
+        // var newimg = new Image();
+        // newimg.src = `img/${img.url}`
+        // var width = newimg.naturalWidth
+        // var height = newimg.naturalHeight
+        // strHtml += `<img class="image" style="grid-row: ${Math.round(height / 50)} span; grid-column:  ${Math.round(width / 200)} span;" onclick="onImg('${img.id}')" src="img/${img.url}" />`;
+        strHtml += `<img class="image" onclick="onImg('${img.id}')" src="img/${img.url}" />`;
     })
     const elImgContainer = document.querySelector('.img-container');
     elImgContainer.innerHTML = strHtml;
 }
 
-function onImg(imgId, imgRatio) {
+function onImg(imgId) {
     showEditor()
 
     setSelectedImgId(imgId)
-    resizeCanvas(imgRatio)
     rendrCanvas()
 }
 
@@ -117,10 +115,10 @@ function onSerchImg(typing) {
 function renderKeywords() {
     var keywords = getKeywords()
     var words = Object.keys(keywords)
-    var strHTML = ''
+    var strHTML = `<span onclick="onKeyword('')" class="keyword" font-size: 50px; ">ALL </span>`
     words.forEach(function(word) {
         if (keywords[word] > 2) {
-            strHTML += `<span onclick="onKeyword('${word}')" style="cursor: pointer; font-size: ${+(keywords[word]) * 4}px; ">${word} </span>`
+            strHTML += `<span onclick="onKeyword('${word}')" class="keyword" style="font-size: ${+(keywords[word]) * 4}px; ">${word} </span>`
         }
     })
     var elWordsContainer = document.querySelector('.key-words')
@@ -131,6 +129,9 @@ function onKeyword(keyword) {
     renderImgs(keyword)
     addCommon(keyword)
     renderKeywords()
+
+    var elSearch = document.querySelector('.search-gallery')
+    elSearch.value = keyword
 }
 
 function onUploadImg(ev) {
@@ -167,7 +168,7 @@ function onTxt(text) {
     setLineTxt(text)
     rendrCanvas()
     elInput.addEventListener("change", function() {
-        elInput.value = ''
+        elInput.value = ' '
     })
 }
 
@@ -191,8 +192,8 @@ function onTxtLocY(diff) {
     rendrCanvas()
 }
 
-function onTxtLocX(diff) {
-    setLocX(diff)
+function onTxtLocX(pos) {
+    setTxtAlign(pos)
     rendrCanvas()
 }
 
@@ -255,15 +256,6 @@ function addStickers() {
     })
 }
 
-function resizeCanvas(imgRatio) {
-    var elContainer = document.querySelector('.canvas-container');
-    var elHeight = elContainer.offsetHeight
-    elContainer.style.width = `${elHeight * imgRatio}px`
-
-    gCanvas.width = elContainer.offsetWidth
-    gCanvas.height = elContainer.offsetHeight
-}
-
 
 function CanvasEvListeners() {
     gCanvas.addEventListener("touchmove", function(event) {
@@ -323,6 +315,7 @@ function CanvasEvListeners() {
             var startY = line.locY - height + 5
             if (offsetX > startX && offsetX < startX + width &&
                 offsetY > startY && offsetY < startY + height) {
+                setSelectedLineIdx(index)
                 setLineLocation(index, offsetX, offsetY + height / 2)
                 rendrCanvas()
             }
@@ -348,10 +341,16 @@ function downloadCanvas(elLink) {
 
 function drawImg() {
     var elContainer = document.querySelector('.canvas-container');
+
     let currMeme = getMeme()
     var currImg = getImg()
     var img = new Image();
     img.src = `img/${currImg.url}`
+    var height = elContainer.offsetHeight
+    var ratio = img.naturalWidth / img.naturalHeight
+    elContainer.style.width = height * ratio + 'px'
+    gCanvas.width = elContainer.offsetWidth
+
 
     if (currImg.isInput) {
         var reader = new FileReader();
@@ -360,7 +359,7 @@ function drawImg() {
             img.onload = () => {
                 gCtx.drawImage(img, 0, 0, elContainer.offsetWidth, elContainer.offsetHeight)
                 drawText(currMeme.lines)
-                addBorder()
+                addBorder(img.naturalWidth)
                 addStickers()
             }
         }, false)
@@ -379,6 +378,7 @@ function drawImg() {
 
 function drawText(memes) {
     memes.forEach(function(meme) {
+        console.log(gCtx.measureText(meme.txt))
         gCtx.lineWidth = '1.5'
         gCtx.strokeStyle = 'black'
         gCtx.fillStyle = `${meme.color}`

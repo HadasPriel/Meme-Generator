@@ -25,147 +25,120 @@ var gImgs = [{
         id: gImgId,
         url: `${gImgId++}.jpg`,
         keywords: ['angry', 'important', 'speech'],
-        ratio: 1,
         isInput: false
     },
     {
         id: gImgId,
         url: `${gImgId++}.jpg`,
         keywords: ['animals', 'cute', 'kiss'],
-        ratio: 1.5,
         isInput: false
     },
     {
         id: gImgId,
         url: `${gImgId++}.jpg`,
         keywords: ['baby', 'animals', 'cute'],
-        ratio: 1,
         isInput: false
     },
     {
         id: gImgId,
         url: `${gImgId++}.jpg`,
         keywords: ['sleep', 'animals', 'copmuter'],
-        ratio: 1,
         isInput: false
     },
     {
         id: gImgId,
         url: `${gImgId++}.jpg`,
         keywords: ['success', 'baby', 'cute'],
-        ratio: 1.56,
         isInput: false
     },
     {
         id: gImgId,
         url: `${gImgId++}.jpg`,
         keywords: ['speech', 'snob', 'important'],
-        ratio: 1,
         isInput: false
     },
     {
         id: gImgId,
         url: `${gImgId++}.jpg`,
         keywords: ['surprise', 'cute', 'baby'],
-        ratio: 1,
         isInput: false
     },
     {
         id: gImgId,
         url: `${gImgId++}.jpg`,
         keywords: ['happy', 'clown', 'listen'],
-        ratio: 1,
         isInput: false
     },
     {
         id: gImgId,
         url: `${gImgId++}.jpg`,
         keywords: ['baby', 'laugh', 'happy'],
-        ratio: 1.6,
         isInput: false
     },
     {
         id: gImgId,
         url: `${gImgId++}.jpg`,
         keywords: ['man', 'laugh', 'happy'],
-        ratio: 1,
         isInput: false
     },
     {
         id: gImgId,
         url: `${gImgId++}.jpg`,
         keywords: ['boxing', 'kiss', 'man'],
-        ratio: 1.33,
         isInput: false
     },
     {
         id: gImgId,
         url: `${gImgId++}.jpg`,
         keywords: ['surprise', 'man', 'inportant'],
-        ratio: 1,
         isInput: false
     },
     {
         id: gImgId,
         url: `${gImgId++}.jpg`,
         keywords: ['drink', 'man', 'happy'],
-        ratio: 1.5,
         isInput: false
     },
     {
         id: gImgId,
         url: `${gImgId++}.jpg`,
         keywords: ['serious', 'man', 'sun glass', 'matrix'],
-        ratio: 1,
         isInput: false
     },
     {
         id: gImgId,
         url: `${gImgId++}.jpg`,
         keywords: ['speech', 'man', 'game of thrones'],
-        ratio: 1.69,
         isInput: false
     },
     {
         id: gImgId,
         url: `${gImgId++}.jpg`,
         keywords: ['laugh', 'funny', 'man'],
-        ratio: 1,
         isInput: false
     },
     {
         id: gImgId,
         url: `${gImgId++}.jpg`,
         keywords: ['speech', 'man', 'putin'],
-        ratio: 1,
         isInput: false
     },
     {
         id: gImgId,
         url: `${gImgId++}.jpg`,
         keywords: ['encourage', 'scared', 'toy story'],
-        ratio: 1,
         isInput: false
     },
     {
         id: gImgId,
         url: `${gImgId++}.jpg`,
         keywords: ['woman', 'success', 'happy'],
-        ratio: 1,
-        isInput: false
-    },
-    {
-        id: gImgId,
-        url: `${gImgId++}.jpg`,
-        keywords: ['dog', 'animals', 'cute'],
-        ratio: 1.5,
         isInput: false
     },
     {
         id: gImgId,
         url: `${gImgId++}.jpg`,
         keywords: ['woman', 'happy', 'dance'],
-        ratio: 1.37,
         isInput: false
     },
 ]
@@ -174,24 +147,14 @@ var gMeme = {
     selectedImgId: 5,
     selectedLineIdx: 0,
     lines: [{
-            txt: 'WOW!',
-            font: 'Impact',
-            size: 40,
-            align: 'center',
-            color: 'white',
-            locX: 250,
-            locY: 70
-        },
-        {
-            txt: 'I built an awsome meme gen!',
-            font: 'Impact',
-            size: 35,
-            align: 'center',
-            color: 'white',
-            locX: 250,
-            locY: 400,
-        }
-    ],
+        txt: '',
+        font: 'Impact',
+        size: 40,
+        align: 'center',
+        color: 'white',
+        locX: 230,
+        locY: 70
+    }],
     stickers: []
 }
 
@@ -245,8 +208,6 @@ function createInputImg(ev) {
         id: gImgId,
         url: ev.target.files[0],
         file: ev.target.files[0],
-        keywords: [],
-        ratio: 1,
         isInput: true
 
     }
@@ -275,21 +236,25 @@ function setColor(color) {
     gMeme.lines[gMeme.selectedLineIdx].color = color
 }
 
-function setDiraction(diraction) {
-    gMeme.lines[gMeme.selectedLineIdx].align = diraction
-}
+// function setDiraction(diraction) {
+//     gMeme.lines[gMeme.selectedLineIdx].align = diraction
+// }
 
 function setLocY(diff) {
     gMeme.lines[gMeme.selectedLineIdx].locY += diff
 }
 
-function setLocX(locX) {
-    gMeme.lines[gMeme.selectedLineIdx].locX = locX
+function setTxtAlign(pos) {
+    gMeme.lines[gMeme.selectedLineIdx].align = pos
 }
 
 function deleteLine() {
     if (!gMeme.lines) return
     gMeme.lines.splice(gMeme.selectedLineIdx, 1)
+}
+
+function deletePreMeme() {
+    g
 }
 
 function createLine() {
@@ -311,10 +276,13 @@ function createLine() {
     gMeme.lines.push(newLine)
 }
 
-function setSelectedLineIdx() {
-    gMeme.selectedLineIdx++;
-    if (gMeme.selectedLineIdx > gMeme.lines.length - 1) gMeme.selectedLineIdx = 0
-        // return gMeme.selectedLineIdx
+function setSelectedLineIdx(idx) {
+    if (idx) {
+        gMeme.selectedLineIdx = idx
+    } else {
+        gMeme.selectedLineIdx++;
+        if (gMeme.selectedLineIdx > gMeme.lines.length - 1) gMeme.selectedLineIdx = 0
+    }
 }
 
 function setSelectedImgId(imgId) {
